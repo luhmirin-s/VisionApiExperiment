@@ -11,12 +11,14 @@
 
     <LinearLayout
         android:id="@+id/preview_sources_layout"
+        style="?android:attr/buttonBarStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
         <Button
             android:id="@+id/preview_sources_camera"
+            style="?android:attr/buttonBarButtonStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -24,6 +26,7 @@
 
         <Button
             android:id="@+id/preview_sources_galery"
+            style="?android:attr/buttonBarButtonStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -33,6 +36,7 @@
 
     <LinearLayout
         android:id="@+id/preview_filters_layout"
+        style="?android:attr/buttonBarStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/preview_sources_layout"
@@ -41,6 +45,7 @@
 
         <Button
             android:id="@+id/preview_filters_faces"
+            style="?android:attr/buttonBarButtonStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -49,6 +54,7 @@
 
         <Button
             android:id="@+id/preview_filters_barcodes"
+            style="?android:attr/buttonBarButtonStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -57,6 +63,7 @@
 
         <Button
             android:id="@+id/preview_filters_text"
+            style="?android:attr/buttonBarButtonStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
