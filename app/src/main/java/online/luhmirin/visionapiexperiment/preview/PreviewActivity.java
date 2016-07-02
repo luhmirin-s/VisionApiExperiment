@@ -21,9 +21,9 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import online.luhmirin.visionapiexperiment.R;
 import online.luhmirin.visionapiexperiment.common.IntentUtils;
-import online.luhmirin.visionapiexperiment.preview.filter.BarcodeDetectorWrapper;
-import online.luhmirin.visionapiexperiment.preview.filter.FaceDetectorWrapper;
-import online.luhmirin.visionapiexperiment.preview.filter.TextDetectorWrapper;
+import online.luhmirin.visionapiexperiment.preview.detector.BarcodeDetectorWrapper;
+import online.luhmirin.visionapiexperiment.preview.detector.FaceDetectorWrapper;
+import online.luhmirin.visionapiexperiment.preview.detector.TextDetectorWrapper;
 import timber.log.Timber;
 
 public class PreviewActivity extends AppCompatActivity implements PreviewContract {

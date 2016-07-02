@@ -1,4 +1,4 @@
-package online.luhmirin.visionapiexperiment.preview.filter;
+package online.luhmirin.visionapiexperiment.preview.detector;
 
 
 import android.graphics.Bitmap;

@@ -5,14 +5,13 @@ import android.support.annotation.Nullable;
 import android.util.SparseArray;
 
 import com.google.android.gms.vision.barcode.Barcode;
-import com.google.android.gms.vision.barcode.BarcodeDetector;
 import com.google.android.gms.vision.face.Face;
 import com.google.android.gms.vision.text.TextBlock;
 
-import online.luhmirin.visionapiexperiment.preview.filter.BarcodeDetectorWrapper;
-import online.luhmirin.visionapiexperiment.preview.filter.DetectorWrapper;
-import online.luhmirin.visionapiexperiment.preview.filter.FaceDetectorWrapper;
-import online.luhmirin.visionapiexperiment.preview.filter.TextDetectorWrapper;
+import online.luhmirin.visionapiexperiment.preview.detector.BarcodeDetectorWrapper;
+import online.luhmirin.visionapiexperiment.preview.detector.DetectorWrapper;
+import online.luhmirin.visionapiexperiment.preview.detector.FaceDetectorWrapper;
+import online.luhmirin.visionapiexperiment.preview.detector.TextDetectorWrapper;
 import timber.log.Timber;
 
 class PreviewPresenter {
@@ -49,7 +48,7 @@ class PreviewPresenter {
         contract.disableFilterButtons();
     }
 
-    public void detectFaces(FaceDetectorWrapper detection) {
+    void detectFaces(FaceDetectorWrapper detection) {
         checkIfDetectorOperational(detection);
 
         SparseArray<Face> faces = detection.detect(imageBitmap);
