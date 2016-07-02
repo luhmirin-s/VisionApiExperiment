@@ -11,4 +11,8 @@ interface PreviewContract {
     void startGalery();
 
     void setPreviewImage(Bitmap imageBitmap);
+
+    void enableFilterButtons();
+
+    void disableFilterButtons();
 }

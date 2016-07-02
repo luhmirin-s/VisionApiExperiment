@@ -23,16 +23,17 @@ class PreviewPresenter {
         contract.startGalery();
     }
 
-
     void imageReceived(@Nullable Bitmap imageBitmap) {
         if (imageBitmap == null) {
             imageNotReceived();
         } else {
             contract.setPreviewImage(imageBitmap);
+            contract.enableFilterButtons();
         }
     }
 
     void imageNotReceived() {
         contract.showMessage("Not able to import message");
+        contract.disableFilterButtons();
     }
 }
