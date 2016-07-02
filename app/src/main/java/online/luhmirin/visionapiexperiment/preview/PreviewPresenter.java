@@ -2,13 +2,13 @@ package online.luhmirin.visionapiexperiment.preview;
 
 import android.graphics.Bitmap;
 import android.support.annotation.Nullable;
-import android.util.SparseArray;
 
 import com.google.android.gms.vision.barcode.Barcode;
 import com.google.android.gms.vision.face.Face;
 import com.google.android.gms.vision.text.TextBlock;
 
 import online.luhmirin.visionapiexperiment.preview.detector.BarcodeDetectorWrapper;
+import online.luhmirin.visionapiexperiment.preview.detector.DetectorListener;
 import online.luhmirin.visionapiexperiment.preview.detector.DetectorWrapper;
 import online.luhmirin.visionapiexperiment.preview.detector.FaceDetectorWrapper;
 import online.luhmirin.visionapiexperiment.preview.detector.TextDetectorWrapper;
@@ -48,44 +48,38 @@ class PreviewPresenter {
         contract.disableFilterButtons();
     }
 
-    void detectFaces(FaceDetectorWrapper detection) {
+    void detectFaces(FaceDetectorWrapper detection, DetectorListener<Face> detectorListener) {
         checkIfDetectorOperational(detection);
 
-        SparseArray<Face> faces = detection.detect(imageBitmap);
-        if (faces.size() <= 0) {
+        detection.detect(imageBitmap);
+        if (!detection.hasFoundItems()) {
             contract.showMessage("Nothing found");
         } else {
-            for (int i = 0; i < faces.size(); i++) {
-                contract.foundFace(faces.valueAt(i));
-            }
+            detectorListener.onResultFound(detection.getResults());
         }
         detection.done();
     }
 
-     void detectBarcodes(BarcodeDetectorWrapper detection) {
+    void detectBarcodes(BarcodeDetectorWrapper detection, DetectorListener<Barcode> detectorListener) {
         checkIfDetectorOperational(detection);
 
-        SparseArray<Barcode> barcode = detection.detect(imageBitmap);
-        if (barcode.size() <= 0) {
+        detection.detect(imageBitmap);
+        if (!detection.hasFoundItems()) {
             contract.showMessage("Nothing found");
         } else {
-            for (int i = 0; i < barcode.size(); i++) {
-                contract.foundBarcode(barcode.valueAt(i));
-            }
+            detectorListener.onResultFound(detection.getResults());
         }
         detection.done();
     }
 
-     void detectText(TextDetectorWrapper detection) {
+    void detectText(TextDetectorWrapper detection, DetectorListener<TextBlock> detectorListener) {
         checkIfDetectorOperational(detection);
 
-        SparseArray<TextBlock> textBlocks = detection.detect(imageBitmap);
-        if (textBlocks.size() <= 0) {
+        detection.detect(imageBitmap);
+        if (!detection.hasFoundItems()) {
             contract.showMessage("Nothing found");
         } else {
-            for (int i = 0; i < textBlocks.size(); i++) {
-                contract.foundText(textBlocks.valueAt(i));
-            }
+            detectorListener.onResultFound(detection.getResults());
         }
         detection.done();
     }

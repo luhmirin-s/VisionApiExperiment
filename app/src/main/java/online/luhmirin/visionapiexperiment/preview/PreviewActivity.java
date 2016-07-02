@@ -88,17 +88,47 @@ public class PreviewActivity extends AppCompatActivity implements PreviewContrac
 
     @OnClick(R.id.preview_detect_faces)
     protected void detectFacesClicked() {
-        presenter.detectFaces(new FaceDetectorWrapper(this));
+        presenter.detectFaces(new FaceDetectorWrapper(this), results -> {
+            for (Face face : results) {
+                Timber.wtf("==== Face ====");
+                Timber.wtf("position %s", face.getPosition().toString());
+                Timber.wtf("height %f", face.getHeight());
+                Timber.wtf("width %f", face.getWidth());
+                Timber.d("-----");
+                Timber.wtf("smiling %f", face.getIsSmilingProbability());
+                Timber.wtf("left open %f", face.getIsLeftEyeOpenProbability());
+                Timber.wtf("right open %f", face.getIsRightEyeOpenProbability());
+                Timber.d("-----");
+                Timber.wtf("euler Y: %f", face.getEulerY());
+                Timber.wtf("euler Z: %f", face.getEulerY());
+                Timber.wtf("========");
+            }
+        });
     }
 
     @OnClick(R.id.preview_detect_barcodes)
     protected void detectBarcodesClicked() {
-        presenter.detectBarcodes(new BarcodeDetectorWrapper(this));
+        presenter.detectBarcodes(new BarcodeDetectorWrapper(this), results -> {
+            for (Barcode barcode : results) {
+                Timber.wtf("==== Barcode ====");
+                Timber.wtf("box %s", barcode.getBoundingBox().toString());
+                Timber.wtf("format %d", barcode.format);
+                Timber.wtf("value %s", barcode.rawValue);
+                Timber.wtf("========");
+            }
+        });
     }
 
     @OnClick(R.id.preview_detect_text)
     protected void detectTextClicked() {
-        presenter.detectText(new TextDetectorWrapper(this));
+        presenter.detectText(new TextDetectorWrapper(this), results -> {
+            for (TextBlock textBlock : results) {
+                Timber.wtf("==== Text ====");
+                Timber.wtf("position %s", textBlock.getBoundingBox().toString());
+                Timber.wtf("value %s", textBlock.getValue());
+                Timber.wtf("========");
+            }
+        });
     }
 
     // Contract methods
@@ -134,36 +164,4 @@ public class PreviewActivity extends AppCompatActivity implements PreviewContrac
         ButterKnife.apply(filterButtons, ENABLED, false);
     }
 
-    @Override
-    public void foundFace(Face face) {
-        Timber.wtf("==== Face ====");
-        Timber.wtf("position %s", face.getPosition().toString());
-        Timber.wtf("height %f", face.getHeight());
-        Timber.wtf("width %f", face.getWidth());
-        Timber.d("-----");
-        Timber.wtf("smiling %f", face.getIsSmilingProbability());
-        Timber.wtf("left open %f", face.getIsLeftEyeOpenProbability());
-        Timber.wtf("right open %f", face.getIsRightEyeOpenProbability());
-        Timber.d("-----");
-        Timber.wtf("euler Y: %f", face.getEulerY());
-        Timber.wtf("euler Z: %f", face.getEulerY());
-        Timber.wtf("========");
-    }
-
-    @Override
-    public void foundBarcode(Barcode barcode) {
-        Timber.wtf("==== Barcode ====");
-        Timber.wtf("box %s", barcode.getBoundingBox().toString());
-        Timber.wtf("format %d", barcode.format);
-        Timber.wtf("value %s", barcode.rawValue);
-        Timber.wtf("========");
-    }
-
-    @Override
-    public void foundText(TextBlock textBlock) {
-        Timber.wtf("==== Text ====");
-        Timber.wtf("position %s", textBlock.getBoundingBox().toString());
-        Timber.wtf("value %s", textBlock.getValue());
-        Timber.wtf("========");
-    }
 }
