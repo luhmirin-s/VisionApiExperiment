@@ -1,5 +1,8 @@
 package online.luhmirin.visionapiexperiment.preview;
 
+import android.graphics.Bitmap;
+import android.support.annotation.Nullable;
+
 import timber.log.Timber;
 
 class PreviewPresenter {
@@ -12,13 +15,24 @@ class PreviewPresenter {
 
     void openCameraClicked() {
         Timber.wtf("open camera");
-        contract.showMessage("Camera opening");
+        contract.startCamera();
     }
 
     void openGaleryClicked() {
         Timber.wtf("open galery");
-        contract.showMessage("Galery opening");
+        contract.startGalery();
     }
 
 
+    void imageReceived(@Nullable Bitmap imageBitmap) {
+        if (imageBitmap == null) {
+            imageNotReceived();
+        } else {
+            contract.setPreviewImage(imageBitmap);
+        }
+    }
+
+    void imageNotReceived() {
+        contract.showMessage("Not able to import message");
+    }
 }

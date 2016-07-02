@@ -6,4 +6,5 @@
     <string name="filter_barcodes">Barcodes</string>
     <string name="filter_text">Text</string>
     <string name="cd_preview_image">Preview image</string>
+    <string name="get_picture">Choose picture</string>
 </resources>
