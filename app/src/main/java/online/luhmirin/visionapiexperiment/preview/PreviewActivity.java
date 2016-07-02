@@ -2,6 +2,7 @@ package online.luhmirin.visionapiexperiment.preview;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.Rect;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
@@ -24,6 +25,7 @@ import online.luhmirin.visionapiexperiment.common.IntentUtils;
 import online.luhmirin.visionapiexperiment.preview.detector.BarcodeDetectorWrapper;
 import online.luhmirin.visionapiexperiment.preview.detector.FaceDetectorWrapper;
 import online.luhmirin.visionapiexperiment.preview.detector.TextDetectorWrapper;
+import online.luhmirin.visionapiexperiment.preview.overlay.OverlayView;
 import timber.log.Timber;
 
 public class PreviewActivity extends AppCompatActivity implements PreviewContract {
@@ -36,6 +38,9 @@ public class PreviewActivity extends AppCompatActivity implements PreviewContrac
 
     @BindView(R.id.preview_image)
     ImageView imagePreview;
+
+    @BindView(R.id.preview_overlay)
+    OverlayView overlayView;
 
     @BindViews({
             R.id.preview_detect_barcodes,
@@ -90,8 +95,10 @@ public class PreviewActivity extends AppCompatActivity implements PreviewContrac
     protected void detectFacesClicked() {
         presenter.detectFaces(new FaceDetectorWrapper(this), results -> {
             for (Face face : results) {
+                overlayView.addBox(getFaceBoundingBox(face), () -> showMessage("some face"));
+
                 Timber.wtf("==== Face ====");
-                Timber.wtf("position %s", face.getPosition().toString());
+                Timber.wtf("position %s", getFaceBoundingBox(face).toString());
                 Timber.wtf("height %f", face.getHeight());
                 Timber.wtf("width %f", face.getWidth());
                 Timber.d("-----");
@@ -106,10 +113,21 @@ public class PreviewActivity extends AppCompatActivity implements PreviewContrac
         });
     }
 
+    private Rect getFaceBoundingBox(Face face) {
+        return new Rect(
+                Math.round(face.getPosition().x),
+                Math.round(face.getPosition().y),
+                Math.round(face.getPosition().x + face.getWidth()),
+                Math.round(face.getPosition().y + face.getHeight())
+        );
+    }
+
     @OnClick(R.id.preview_detect_barcodes)
     protected void detectBarcodesClicked() {
         presenter.detectBarcodes(new BarcodeDetectorWrapper(this), results -> {
             for (Barcode barcode : results) {
+                overlayView.addBox(barcode.getBoundingBox(), () -> showMessage(barcode.rawValue));
+
                 Timber.wtf("==== Barcode ====");
                 Timber.wtf("box %s", barcode.getBoundingBox().toString());
                 Timber.wtf("format %d", barcode.format);
@@ -123,6 +141,8 @@ public class PreviewActivity extends AppCompatActivity implements PreviewContrac
     protected void detectTextClicked() {
         presenter.detectText(new TextDetectorWrapper(this), results -> {
             for (TextBlock textBlock : results) {
+                overlayView.addBox(textBlock.getBoundingBox(), () -> showMessage(textBlock.getValue()));
+
                 Timber.wtf("==== Text ====");
                 Timber.wtf("position %s", textBlock.getBoundingBox().toString());
                 Timber.wtf("value %s", textBlock.getValue());
@@ -152,6 +172,7 @@ public class PreviewActivity extends AppCompatActivity implements PreviewContrac
     @Override
     public void setPreviewImage(Bitmap imageBitmap) {
         imagePreview.setImageBitmap(imageBitmap);
+        overlayView.setBitmap(imageBitmap);
     }
 
     @Override

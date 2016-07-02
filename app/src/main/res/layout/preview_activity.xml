@@ -84,4 +84,14 @@
         android:background="@color/primary_light"
         android:src="@drawable/vector_placeholder" />
 
+    <online.luhmirin.visionapiexperiment.preview.overlay.OverlayView
+        android:id="@+id/preview_overlay"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignTop="@id/preview_image"
+        android:layout_alignBottom="@id/preview_image"
+        android:layout_alignStart="@id/preview_image"
+        android:layout_alignEnd="@id/preview_image"
+        tools:visibility="gone"/>
+
 </RelativeLayout>
