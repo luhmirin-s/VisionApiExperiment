@@ -36,7 +36,7 @@
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/preview_filters_layout"
+        android:id="@+id/preview_detects_layout"
         style="?android:attr/buttonBarStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -45,42 +45,42 @@
         android:orientation="horizontal">
 
         <Button
-            android:id="@+id/preview_filters_faces"
+            android:id="@+id/preview_detect_faces"
             style="?android:attr/buttonBarButtonStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:enabled="false"
-            android:text="@string/filter_faces" />
+            android:text="@string/detect_faces" />
 
         <Button
-            android:id="@+id/preview_filters_barcodes"
+            android:id="@+id/preview_detect_barcodes"
             style="?android:attr/buttonBarButtonStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:enabled="false"
-            android:text="@string/filter_barcodes" />
+            android:text="@string/detect_barcodes" />
 
         <Button
-            android:id="@+id/preview_filters_text"
+            android:id="@+id/preview_detect_text"
             style="?android:attr/buttonBarButtonStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:enabled="false"
-            android:text="@string/filter_text" />
+            android:text="@string/detect_text" />
     </LinearLayout>
 
     <ImageView
         android:id="@+id/preview_image"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignEnd="@+id/preview_filters_layout"
+        android:layout_alignEnd="@+id/preview_detects_layout"
         android:layout_alignParentBottom="true"
         android:layout_alignParentStart="true"
         android:contentDescription="@string/cd_preview_image"
-        android:layout_below="@+id/preview_filters_layout"
+        android:layout_below="@+id/preview_detects_layout"
         android:background="@color/primary_light"
         android:src="@drawable/vector_placeholder" />
 

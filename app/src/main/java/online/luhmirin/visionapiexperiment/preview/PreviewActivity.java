@@ -9,6 +9,10 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 
+import com.google.android.gms.vision.barcode.Barcode;
+import com.google.android.gms.vision.face.Face;
+import com.google.android.gms.vision.text.TextBlock;
+
 import java.util.List;
 
 import butterknife.BindView;
@@ -17,6 +21,9 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import online.luhmirin.visionapiexperiment.R;
 import online.luhmirin.visionapiexperiment.common.IntentUtils;
+import online.luhmirin.visionapiexperiment.preview.filter.BarcodeDetectorWrapper;
+import online.luhmirin.visionapiexperiment.preview.filter.FaceDetectorWrapper;
+import online.luhmirin.visionapiexperiment.preview.filter.TextDetectorWrapper;
 import timber.log.Timber;
 
 public class PreviewActivity extends AppCompatActivity implements PreviewContract {
@@ -30,7 +37,11 @@ public class PreviewActivity extends AppCompatActivity implements PreviewContrac
     @BindView(R.id.preview_image)
     ImageView imagePreview;
 
-    @BindViews({R.id.preview_filters_barcodes, R.id.preview_filters_faces, R.id.preview_filters_text})
+    @BindViews({
+            R.id.preview_detect_barcodes,
+            R.id.preview_detect_faces,
+            R.id.preview_detect_text
+    })
     List<Button> filterButtons;
 
     private PreviewPresenter presenter;
@@ -75,16 +86,19 @@ public class PreviewActivity extends AppCompatActivity implements PreviewContrac
         presenter.openGaleryClicked();
     }
 
-    @OnClick(R.id.preview_filters_faces)
-    protected void filterFacesClicked() {
+    @OnClick(R.id.preview_detect_faces)
+    protected void detectFacesClicked() {
+        presenter.detectFaces(new FaceDetectorWrapper(this));
     }
 
-    @OnClick(R.id.preview_filters_barcodes)
-    protected void filterBarcodesClicked() {
+    @OnClick(R.id.preview_detect_barcodes)
+    protected void detectBarcodesClicked() {
+        presenter.detectBarcodes(new BarcodeDetectorWrapper(this));
     }
 
-    @OnClick(R.id.preview_filters_text)
-    protected void filterTextClicked() {
+    @OnClick(R.id.preview_detect_text)
+    protected void detectTextClicked() {
+        presenter.detectText(new TextDetectorWrapper(this));
     }
 
     // Contract methods
@@ -120,4 +134,36 @@ public class PreviewActivity extends AppCompatActivity implements PreviewContrac
         ButterKnife.apply(filterButtons, ENABLED, false);
     }
 
+    @Override
+    public void foundFace(Face face) {
+        Timber.wtf("==== Face ====");
+        Timber.wtf("position %s", face.getPosition().toString());
+        Timber.wtf("height %f", face.getHeight());
+        Timber.wtf("width %f", face.getWidth());
+        Timber.d("-----");
+        Timber.wtf("smiling %f", face.getIsSmilingProbability());
+        Timber.wtf("left open %f", face.getIsLeftEyeOpenProbability());
+        Timber.wtf("right open %f", face.getIsRightEyeOpenProbability());
+        Timber.d("-----");
+        Timber.wtf("euler Y: %f", face.getEulerY());
+        Timber.wtf("euler Z: %f", face.getEulerY());
+        Timber.wtf("========");
+    }
+
+    @Override
+    public void foundBarcode(Barcode barcode) {
+        Timber.wtf("==== Barcode ====");
+        Timber.wtf("box %s", barcode.getBoundingBox().toString());
+        Timber.wtf("format %d", barcode.format);
+        Timber.wtf("value %s", barcode.rawValue);
+        Timber.wtf("========");
+    }
+
+    @Override
+    public void foundText(TextBlock textBlock) {
+        Timber.wtf("==== Text ====");
+        Timber.wtf("position %s", textBlock.getBoundingBox().toString());
+        Timber.wtf("value %s", textBlock.getValue());
+        Timber.wtf("========");
+    }
 }

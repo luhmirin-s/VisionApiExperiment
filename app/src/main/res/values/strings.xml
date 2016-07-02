@@ -2,9 +2,9 @@
     <string name="app_name">Vision API Experiment</string>
     <string name="source_take_picture">Take picture</string>
     <string name="source_open_existing">Open existing</string>
-    <string name="filter_faces">Faces</string>
-    <string name="filter_barcodes">Barcodes</string>
-    <string name="filter_text">Text</string>
+    <string name="detect_faces">Faces</string>
+    <string name="detect_barcodes">Barcodes</string>
+    <string name="detect_text">Text</string>
     <string name="cd_preview_image">Preview image</string>
     <string name="get_picture">Choose picture</string>
 </resources>
