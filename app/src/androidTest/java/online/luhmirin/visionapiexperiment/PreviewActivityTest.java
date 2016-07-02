@@ -9,6 +9,8 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import online.luhmirin.visionapiexperiment.preview.PreviewActivity;
+
 import static junit.framework.Assert.assertEquals;
 
 @RunWith(AndroidJUnit4.class)
