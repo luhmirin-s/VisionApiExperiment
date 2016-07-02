@@ -11,6 +11,7 @@ android {
         versionCode 1
         versionName "1.0"
 
+        testInstrumentationRunner 'android.support.test.runner.AndroidJUnitRunner'
         jackOptions {
             enabled true
         }
@@ -47,4 +48,6 @@ dependencies {
     compile "com.jakewharton:butterknife:${versions.butterknife}"
 
     testCompile 'junit:junit:4.12'
+
+    androidTestCompile 'com.android.support.test.espresso:espresso-core:2.2.2'
 }
